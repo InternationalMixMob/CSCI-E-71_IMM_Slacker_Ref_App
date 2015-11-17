@@ -29,3 +29,6 @@ SlackerReferenceApp/node_modules/
 SlackerReferenceApp/platforms/
 SlackerReferenceApp/plugins/
 SlackerReferenceApp/lib
+
+!SlackerReferenceApp/platforms/.gitkeep
+!SlackerReferenceApp/plugins/.gitkeep
