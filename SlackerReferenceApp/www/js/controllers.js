@@ -49,5 +49,49 @@ angular.module('starter.controllers', [])
   ];
 })
 
+
+
+//.controller('PostsCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+.controller('PostsCtrl', function($scope) {
+    $scope.data = {};
+    $scope.data.message = "";
+    $scope.data.response = "";
+
+    $scope.postMessage = function(data){
+        console.log("Message: " + data.message);
+        data.response += 1;
+        return ;
+    };
+
+    $scope.resetMessage = function(data){
+        console.log("Called Reset");
+        data.message = "";
+        data.response = "";
+    }
+    // Set Header
+    //$scope.$parent.showHeader();
+    //$scope.$parent.clearFabs();
+    //$scope.isExpanded = false;
+    //$scope.$parent.setExpanded(false);
+    //$scope.$parent.setHeaderFab(false);
+
+    // Set Motion
+    /* $timeout(function() {
+        ionicMaterialMotion.slideUp({
+            selector: '.slide-up'
+        });
+    }, 300);
+
+    $timeout(function() {
+        ionicMaterialMotion.fadeSlideInRight({
+            startVelocity: 3000
+        });
+    }, 700);
+
+    // Set Ink
+    ionicMaterialInk.displayEffect();
+    */
+})
+
 .controller('ChannelCtrl', function($scope, $stateParams) {
 });
