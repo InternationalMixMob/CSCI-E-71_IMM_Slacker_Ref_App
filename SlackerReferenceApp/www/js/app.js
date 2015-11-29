@@ -26,7 +26,7 @@ angular.module('slacker', ['ionic', 'slacker.controllers'])
       url: '/app',
       abstract: true,
       templateUrl: 'templates/menu.html',
-      controller: 'AppCtrl'
+      controller: 'SlackerCtrl'
     })
 
     // listing of all of the channels in the currently-authenticated team
