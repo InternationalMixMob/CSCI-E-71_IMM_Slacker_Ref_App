@@ -1,6 +1,5 @@
 // initialze the application
-angular.module('slacker', ['ionic', 'slacker.controllers'])
-
+angular.module('slacker', ['ionic', 'slacker.controllers','ionic-material'])
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -8,7 +7,6 @@ angular.module('slacker', ['ionic', 'slacker.controllers'])
       if (window.cordova && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         cordova.plugins.Keyboard.disableScroll(true);
-
       }
       if (window.StatusBar) {
         // org.apache.cordova.statusbar required
@@ -40,13 +38,24 @@ angular.module('slacker', ['ionic', 'slacker.controllers'])
       }
     })
 
-        // handle displaying whatever it is you want in a "channel"
+    // handle displaying whatever it is you want in a "channel"
     .state('app.single', {
       url: '/channels/:channelId',
       views: {
         'menuContent': {
           templateUrl: 'templates/channel.html',
           controller: 'ChannelCtrl'
+        }
+      }
+    })
+
+    // handle 
+    .state('app.posts', {
+      url: '/post',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/post.html',
+          controller: 'PostsCtrl'
         }
       }
     })
