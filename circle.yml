@@ -1,6 +1,6 @@
 deployment:
   production:
-    branch: hockeyapp
+    branch: master
     commands:
       - npm install
       - chmod +x publish.sh
