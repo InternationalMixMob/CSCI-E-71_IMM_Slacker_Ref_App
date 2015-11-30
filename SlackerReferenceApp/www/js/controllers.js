@@ -55,19 +55,27 @@ angular.module('slacker.controllers', [])
   //.controller('PostsCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
   .controller('PostsCtrl', function($scope) {
     $scope.data = {};
-    $scope.data.message = "";
+    $scope.data.message = "Test from reference app";
     $scope.data.response = "";
 
+    var successCallback = function(message) {
+      console.log("Success: " + message);
+    };
+
+    var failureCallback = function(message) {
+      console.log("Failure: " + message);
+    };
+
     $scope.postMessage = function(data){
-        console.log("Message: " + data.message);
-        data.response += 1;
-        return ;
+      $scope.date.response = Slacker.postMessage(successCallback, failureCallback, data.message);
+      //data.response += 1;
+      return ;
     };
 
     $scope.resetMessage = function(data){
-        console.log("Called Reset");
-        data.message = "";
-        data.response = "";
+      console.log("Called Reset");
+      data.message = "";
+      data.response = "";
     }
     // Set Header
     //$scope.$parent.showHeader();

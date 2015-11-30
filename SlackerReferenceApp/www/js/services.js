@@ -1,4 +1,4 @@
-angular.module('starter.services', [])
+angular.module('slacker.services', [])
 
   .factory('slackerPluginService', function($http) {
     return {
