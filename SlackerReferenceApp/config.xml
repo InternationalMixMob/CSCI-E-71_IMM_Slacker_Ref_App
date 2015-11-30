@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.slackerreferenceapp141804" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ionicframework.slackerreferenceapp141804" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>SlackerReferenceApp</name>
     <description>
         An Ionic Framework and Cordova project.
@@ -70,4 +70,5 @@
     <engine name="ios" spec="~3.9.2" />
     <engine name="android" spec="~4.1.1" />
     <plugin name="cordova-plugin-slack" spec="https://github.com/InternationalMixMob/CSCI-E-71_IMM_Slacker_Cordova_Plugin.git" />
+    <plugin name="cordova-plugin-hockeyapp" spec="~1.3.0" />
 </widget>
