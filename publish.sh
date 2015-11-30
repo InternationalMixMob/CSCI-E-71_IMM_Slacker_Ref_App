@@ -5,7 +5,7 @@ set -e # exit with nonzero exit code if anything fails
 cd SlackerReferenceApp
 
 # Install dependencies
-../node_modules/cordova/bin/bower install
+../node_modules/bower/bin/bower install
 ../node_modules/cordova/bin/cordova prepare
 
 # Build app
