@@ -2,7 +2,7 @@ angular.module('slacker.services', [])
 
   .factory('slackerPluginService', function($http) {
     return {
-        getUser: function() {
+      getUser: function() {
         console.log("NOT IMPLEMENTED");
         return {name: "ME"}
       },

@@ -55,11 +55,12 @@ angular.module('slacker.controllers', [])
   //.controller('PostsCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
   .controller('PostsCtrl', function($scope) {
     $scope.data = {};
-    $scope.data.message = "Test from reference app";
+    $scope.data.message = "";
     $scope.data.response = "";
 
     var successCallback = function(message) {
       console.log("Success: " + message);
+      $scope.data.response = message;
     };
 
     var failureCallback = function(message) {
@@ -67,7 +68,7 @@ angular.module('slacker.controllers', [])
     };
 
     $scope.postMessage = function(data){
-      $scope.date.response = Slacker.postMessage(successCallback, failureCallback, data.message);
+      Slacker.postMessage(successCallback, failureCallback, data.message);
       //data.response += 1;
       return ;
     };
