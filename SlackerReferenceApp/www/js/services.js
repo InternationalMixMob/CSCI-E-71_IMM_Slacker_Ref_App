@@ -1,25 +1,22 @@
-angular.module('starter.services', [])
+angular.module('slacker.services', [])
 
-
-.factory('slackerPluginService', function($http) {
-	return {
-		getUser: function() {
+  .factory('slackerPluginService', function($http) {
+    return {
+      getUser: function() {
         console.log("NOT IMPLEMENTED");
-			  return {name: "ME"}
-		},
+        return {name: "ME"}
+      },
 
-    authorizeWithSlack: function() {
+      authorizeWithSlack: function() {
         console.log("NOT IMPLEMENTED");
-    },
+      },
 
-    destroySlackTokens: function() {
+      destroySlackTokens: function() {
         console.log("NOT IMPLEMENTED");
-    },
+      },
 
-    postToSlack: function() {
+      postToSlack: function() {
         console.log("NOT IMPLEMENTED");
-    },
-
-
-	}
-});
+      },
+    }
+  });
