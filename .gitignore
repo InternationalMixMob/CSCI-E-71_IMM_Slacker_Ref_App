@@ -32,3 +32,4 @@ SlackerReferenceApp/www/lib
 
 !SlackerReferenceApp/platforms/.gitkeep
 !SlackerReferenceApp/plugins/.gitkeep
+node_modules/
