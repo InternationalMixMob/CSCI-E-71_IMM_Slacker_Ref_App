@@ -77,6 +77,7 @@ angular.module('slacker.controllers', [])
         console.log("Var Slacker found, running in mobile app");
         Slacker.postMessage(successCallback, failureCallback, data.message);
       }
+
       return ;
     };
 
@@ -100,6 +101,7 @@ angular.module('slacker.controllers', [])
     }, 300);
 
     $timeout(function() {
+<<<<<<< HEAD
 <<<<<<< HEAD
       $scope.closeLogin();
     }, 1000);
@@ -150,6 +152,8 @@ angular.module('slacker.controllers', [])
     $timeout(function() {
 =======
 >>>>>>> master
+=======
+>>>>>>> master
         ionicMaterialMotion.fadeSlideInRight({
             startVelocity: 3000
         });
@@ -158,6 +162,5 @@ angular.module('slacker.controllers', [])
     // Set Ink
     ionicMaterialInk.displayEffect();
     */
-
 
   });

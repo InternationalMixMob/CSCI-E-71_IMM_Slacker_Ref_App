@@ -18,5 +18,6 @@ angular.module('slacker.services', [])
       postToSlack: function() {
         console.log("NOT IMPLEMENTED");
       },
+
     }
   });

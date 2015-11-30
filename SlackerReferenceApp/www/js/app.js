@@ -50,15 +50,17 @@ angular.module('slacker', ['ionic', 'slacker.controllers','ionic-material'])
       }
     })
 
-  .state('app.posts', {
-    url: '/post',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/post.html',
-        controller: 'PostsCtrl'
+    // handle
+    .state('app.posts', {
+      url: '/post',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/post.html',
+          controller: 'PostsCtrl'
+        }
       }
-    }
-  })
+    })
+
     // listing of the users in the currently authenticated team
     .state('app.users', {
       url: '/users',
@@ -71,4 +73,5 @@ angular.module('slacker', ['ionic', 'slacker.controllers','ionic-material'])
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/channels');
+
   });
