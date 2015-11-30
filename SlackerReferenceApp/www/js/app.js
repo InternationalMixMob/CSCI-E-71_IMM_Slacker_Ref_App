@@ -1,66 +1,75 @@
-// Ionic Starter App
+// initialze the application
+angular.module('slacker', ['ionic', 'slacker.controllers','ionic-material'])
+  .run(function($ionicPlatform) {
+    $ionicPlatform.ready(function() {
+      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+      // for form inputs)
+      if (window.cordova && window.cordova.plugins.Keyboard) {
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        cordova.plugins.Keyboard.disableScroll(true);
+      }
+      if (window.StatusBar) {
+        // org.apache.cordova.statusbar required
+        StatusBar.styleDefault();
+      }
+    });
+  })
 
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
+  // set up the various states for the application
+  .config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
+    // menu state
+    .state('app', {
+      url: '/app',
+      abstract: true,
+      templateUrl: 'templates/menu.html',
+      controller: 'SlackerCtrl'
+    })
 
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
+    // listing of all of the channels in the currently-authenticated team
+    .state('app.channels', {
+      url: '/channels',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/channels.html',
+          controller: 'ChannelsCtrl'
+        }
+      }
+    })
+
+    // handle displaying whatever it is you want in a "channel"
+    .state('app.single', {
+      url: '/channels/:channelId',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/channel.html',
+          controller: 'ChannelCtrl'
+        }
+      }
+    })
+
+    // handle 
+    .state('app.posts', {
+      url: '/post',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/post.html',
+          controller: 'PostsCtrl'
+        }
+      }
+    })
+
+    // listing of the users in the currently authenticated team
+    .state('app.users', {
+      url: '/users',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/users.html'
+        }
+      }
+    });
+
+    // if none of the above states are matched, use this as the fallback
+    $urlRouterProvider.otherwise('/app/channels');
   });
-})
-
-.config(function($stateProvider, $urlRouterProvider) {
-  $stateProvider
-
-  .state('app', {
-    url: '/app',
-    abstract: true,
-    templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
-  })
-
-  .state('app.channels', {
-    url: '/channels',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/channels.html',
-        controller: 'ChannelsCtrl'
-      }
-    }
-  })
-
-  .state('app.users', {
-    url: '/users',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/users.html'
-      }
-    }
-  })
-
-  .state('app.single', {
-    url: '/channels/:channelId',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/channel.html',
-        controller: 'ChannelCtrl'
-      }
-    }
-  });
-
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/channels');
-});
