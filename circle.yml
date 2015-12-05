@@ -1,0 +1,7 @@
+deployment:
+  production:
+    branch: master
+    commands:
+      - npm install
+      - chmod +x publish.sh
+      - ./publish.sh

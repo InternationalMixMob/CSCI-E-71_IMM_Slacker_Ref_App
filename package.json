@@ -1,0 +1,11 @@
+{
+  "name": "slacker-ref",
+  "version": "0.0.2",
+  "dependencies": {
+    "bower": "*",
+    "cordova": "5.4.0"
+  },
+  "scripts": {
+    "test": "echo \"Dummy test\" && exit 0"
+  }
+}
