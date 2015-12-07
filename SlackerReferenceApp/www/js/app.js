@@ -1,23 +1,27 @@
+
 // initialze the application
 angular.module('slacker', ['ionic', 'slacker.controllers','ionic-material'])
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
-      hockeyapp.start(
-        function() {
-          console.log('hockey started');
-        },
-        function() {
-          console.log('hockey failed');
-        },
-        "9e4869fc9b824c798c675b287a7bd292",
-        true);
-      hockeyapp.checkForUpdate(
-        function() {
-          console.log('hockey check success');
-        },
-        function() {
-          console.log('hockey check fail');
-        });
+
+      if (!typeof hockeyapp === 'undefined') {
+        hockeyapp.start(
+          function() {
+            console.log('hockey started');
+          },
+          function() {
+            console.log('hockey failed');
+          },
+          "9e4869fc9b824c798c675b287a7bd292",
+          true);
+        hockeyapp.checkForUpdate(
+          function() {
+            console.log('hockey check success');
+          },
+          function() {
+            console.log('hockey check fail');
+          });
+      }
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
       if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -88,4 +92,5 @@ angular.module('slacker', ['ionic', 'slacker.controllers','ionic-material'])
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/channels');
+
   });

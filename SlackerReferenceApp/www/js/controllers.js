@@ -1,7 +1,7 @@
 angular.module('slacker.controllers', [])
 
   .controller('SlackerCtrl', function($scope, $ionicModal, $timeout) {
-    
+
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -68,8 +68,16 @@ angular.module('slacker.controllers', [])
     };
 
     $scope.postMessage = function(data){
-      Slacker.postMessage(successCallback, failureCallback, data.message);
-      //data.response += 1;
+
+      if (typeof Slacker === 'undefined') {
+        console.log("Var Slacker not define, maybe running in web browser");
+        data.response += 1;
+      } else {
+        // Found it we are good to go
+        console.log("Var Slacker found, running in mobile app");
+        Slacker.postMessage(successCallback, failureCallback, data.message);
+      }
+
       return ;
     };
 
@@ -93,6 +101,59 @@ angular.module('slacker.controllers', [])
     }, 300);
 
     $timeout(function() {
+<<<<<<< HEAD
+<<<<<<< HEAD
+      $scope.closeLogin();
+    }, 1000);
+  };
+})
+
+.controller('ChannelsCtrl', function($scope) {
+  $scope.channels = [
+    { title: 'General', id: 1 },
+    { title: 'Private', id: 2 },
+    { title: 'Custom', id: 3 }
+  ];
+})
+
+
+
+//.controller('PostsCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+.controller('PostsCtrl', function($scope) {
+    $scope.data = {};
+    $scope.data.message = "";
+    $scope.data.response = "";
+
+    $scope.postMessage = function(data){
+        console.log("Message: " + data.message);
+        data.response += 1;
+        return ;
+    };
+
+    $scope.resetMessage = function(data){
+        console.log("Called Reset");
+        data.message = "";
+        data.response = "";
+    }
+    // Set Header
+    //$scope.$parent.showHeader();
+    //$scope.$parent.clearFabs();
+    //$scope.isExpanded = false;
+    //$scope.$parent.setExpanded(false);
+    //$scope.$parent.setHeaderFab(false);
+
+    // Set Motion
+    /* $timeout(function() {
+        ionicMaterialMotion.slideUp({
+            selector: '.slide-up'
+        });
+    }, 300);
+
+    $timeout(function() {
+=======
+>>>>>>> master
+=======
+>>>>>>> master
         ionicMaterialMotion.fadeSlideInRight({
             startVelocity: 3000
         });
@@ -101,4 +162,5 @@ angular.module('slacker.controllers', [])
     // Set Ink
     ionicMaterialInk.displayEffect();
     */
+
   });
