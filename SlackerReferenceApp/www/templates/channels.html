@@ -1,9 +1,10 @@
 <ion-view view-title="Channels">
   <ion-content>
-    <ion-list>
-      <ion-item ng-repeat="channel in channels" href="#/app/channels/{{channel.id}}">
-        {{channel.title}}
-      </ion-item>
-    </ion-list>
+    <div class="list list-inset">
+      <label class="item item-input">
+          <textarea ng-model="data.response" ng-bind="response" placeholder="Response"></textarea>
+      </label>
+      <button class="button button-block button-stable" ng-click="getChannelList()">List Channels</button>
+    </div>
   </ion-content>
 </ion-view>

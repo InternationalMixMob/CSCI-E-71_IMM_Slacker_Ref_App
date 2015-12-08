@@ -42,14 +42,39 @@ angular.module('slacker.controllers', [])
   })
 
   .controller('ChannelsCtrl', function($scope) {
+    var successCallback = function(channels) {
+      console.log("Success");
+      if (channels.length) {
+        console.log("in if");
+        console.log(channels[0].id);
+        for (var key in channels[0])
+          console.log(key);
+      }
+    };
+
+    var failureCallback = function(message) {
+      console.log("Failure: " + message);
+    };
+
+    $scope.getChannelList = function() {
+      if (typeof Slacker === 'undefined') {
+        console.log('Slacker plugin not available, in browser likely.');
+      }
+      else {
+        Slacker.getChannelList(successCallback, failureCallback, true);
+      }
+    }
+    /*
     $scope.channels = [
       { title: 'General', id: 1 },
       { title: 'Private', id: 2 },
       { title: 'Custom', id: 3 }
     ];
+    */
   })
 
   .controller('ChannelCtrl', function($scope, $stateParams) {
+
   })
 
   //.controller('PostsCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
