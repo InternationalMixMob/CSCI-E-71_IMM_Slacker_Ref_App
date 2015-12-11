@@ -1,4 +1,4 @@
-<ion-view view-title="Post Message" name="post-message" ng-controller="PostsCtrl">
+<ion-view view-title="Post Message" name="post-message" ng-controller="PostCtrl">
   <ion-content>
   <div class="list list-inset">
     <label class="item item-input">
@@ -7,7 +7,7 @@
 <br>
 <br>
     <label class="item item-input">
-        <textarea ng-model="data.response" ng-bind="response" placeholder="Response"></textarea>
+      <textarea ng-model="data.response" ng-bind="response" placeholder="Response"></textarea>
     </label>
     <button class="button button-block button-stable" ng-click="resetMessage(data)">Reset</button>
     <button class="button button-block button-stable" ng-click="postMessage(data)">Post</button>

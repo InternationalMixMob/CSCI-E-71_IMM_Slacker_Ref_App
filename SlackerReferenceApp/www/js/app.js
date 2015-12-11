@@ -58,7 +58,7 @@ angular.module('slacker', ['ionic','slacker.controllers','slacker.services','ion
     })
 
     // handle displaying whatever it is you want in a "channel"
-    .state('app.single', {
+    .state('app.channel', {
       url: '/channels/:channelId',
       views: {
         'menuContent': {
@@ -69,12 +69,12 @@ angular.module('slacker', ['ionic','slacker.controllers','slacker.services','ion
     })
 
     // handle
-    .state('app.posts', {
+    .state('app.post', {
       url: '/post',
       views: {
         'menuContent': {
           templateUrl: 'templates/post.html',
-          controller: 'PostsCtrl'
+          controller: 'PostCtrl'
         }
       }
     })

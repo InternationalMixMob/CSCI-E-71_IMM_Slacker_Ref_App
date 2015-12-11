@@ -50,16 +50,16 @@ angular.module('slacker.services', [])
       },
 
       // retriving a single channel (must have been refreshed already)
-      getChannel: function(channelID) {
+      getChannel: function(channelId) {
         return _channels.find(function(el, index, arr) {
-          return el.id == channelID;
+          return el.id == channelId;
         });
       },
 
       // sets the channel (used in posting a message);
-      setChannel: function(channelID) { 
+      setChannel: function(channelId) { 
         _channel = _channels.find(function(el, index, arr) {
-          return el.id == channelID;
+          return el.id == channelId;
         });
       },
 

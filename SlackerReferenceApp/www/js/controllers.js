@@ -69,10 +69,11 @@ angular.module('slacker.controllers', ['slacker.services'])
 
   // the channel controller, needs to do very little for now
   .controller('ChannelCtrl', function($scope, $stateParams) {
-
+    console.log($stateParams.channelId);
   })
 
-  .controller('PostsCtrl', function($scope, SlackerService) {
+  // post controller
+  .controller('PostCtrl', function($scope, SlackerService) {
     $scope.data = {};
     $scope.data.message = "";
     $scope.data.response = "";
