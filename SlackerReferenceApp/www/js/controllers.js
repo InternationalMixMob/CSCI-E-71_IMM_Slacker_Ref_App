@@ -56,9 +56,14 @@ angular.module('slacker.controllers', ['slacker.services'])
       }
     };
 
+    // if it failed, we need to do something
+    var failureCallback = function(message) {
+      console.err(message);
+    }
+
     // we want to reload the channels when we load this page
     $scope.$on('$ionicView.enter', function(e) {
-      SlackerService.refreshChannels(updateListing);
+      SlackerService.getChannelList(updateListing, failureCallback, true);
     });
   })
 
@@ -67,34 +72,31 @@ angular.module('slacker.controllers', ['slacker.services'])
 
   })
 
-  .controller('PostsCtrl', function($scope) {
+  .controller('PostsCtrl', function($scope, SlackerService) {
     $scope.data = {};
     $scope.data.message = "";
     $scope.data.response = "";
 
+    // on success, log it and echo it back into the view
     var successCallback = function(message) {
       console.log("Success: " + message);
       $scope.data.response = message;
+      $scope.$apply();
     };
 
+    // on failure... do the same
     var failureCallback = function(message) {
       console.log("Failure: " + message);
+      $scope.data.response = message;
+      $scope.$apply();
     };
 
+    // just pass this off to the service
     $scope.postMessage = function(data){
-
-      if (typeof Slacker === 'undefined') {
-        console.log("Var Slacker not define, maybe running in web browser");
-        data.response += 1;
-      } else {
-        // Found it we are good to go
-        console.log("Var Slacker found, running in mobile app");
-        Slacker.postMessage(successCallback, failureCallback, data.message);
-      }
-
-      return ;
+      SlackerService.postMessage(successCallback, failureCallback, data.message);
     };
 
+    // clean everything up
     $scope.resetMessage = function(data){
       console.log("Called Reset");
       data.message = "";
