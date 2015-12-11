@@ -24,7 +24,7 @@ angular.module('slacker', ['ionic', 'slacker.controllers','ionic-material'])
       }
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
-      if (window.cordova && window.cordova.plugins.Keyboard) {
+      if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         cordova.plugins.Keyboard.disableScroll(true);
       }
@@ -91,6 +91,6 @@ angular.module('slacker', ['ionic', 'slacker.controllers','ionic-material'])
     });
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/channels');
+    $urlRouterProvider.otherwise('/app/post');
 
   });
