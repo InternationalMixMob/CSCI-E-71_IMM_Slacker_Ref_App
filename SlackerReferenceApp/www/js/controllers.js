@@ -1,4 +1,4 @@
-angular.module('slacker.controllers', [])
+angular.module('slacker.controllers', ['slacker.services'])
 
   .controller('SlackerCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -42,44 +42,23 @@ angular.module('slacker.controllers', [])
   })
 
   // handles the overall channels view, retrieving the channels we can get
-  .controller('ChannelsCtrl', function($scope) {
+  .controller('ChannelsCtrl', function($scope, SlackerService) {
     // what's bound to our view
     $scope.channels = [];
 
     // in the case we successfully got back a channel listing, deal with it
-    var successCallback = function(channels) {
-      console.log('getChannelList success callback fired');
+    var updateListing = function(channels) {
+      // make sure we didn't get no channels back...
       if (channels.length) {
-        console.log("Successfully retrieved " + channels.length + " channels!");
         $scope.channels = channels;
-        // make sure it's updated in the view
+        // and update the view
         $scope.$apply();
       }
     };
 
-    // just log out the error, not sure what else to do for now
-    var failureCallback = function(message) {
-      console.log("error calling getChannelList: " + message);
-    };
-
     // we want to reload the channels when we load this page
     $scope.$on('$ionicView.enter', function(e) {
-      var retrieveChannels = function(num) {
-        // give up after a bit and return defaults
-        if (num >= 10) {
-          successCallback([{name:'Channel1', id:'1'}, {name:'Channel2', id:'2'}, {name:'Channel3', id:'3'}]);
-        }
-        // make sure we have Slacker
-        else if (typeof Slacker === 'undefined' || typeof Slacker.getChannelList === 'undefined') {
-          console.log('Slacker not ready, waiting 500ms');
-          setTimeout(retrieveChannels, 500, ++num);
-        }
-        // the real meat of the function
-        else {
-          Slacker.getChannelList(successCallback, failureCallback, true);
-        }
-      }
-      retrieveChannels(0);
+      SlackerService.refreshChannels(updateListing);
     });
   })
 

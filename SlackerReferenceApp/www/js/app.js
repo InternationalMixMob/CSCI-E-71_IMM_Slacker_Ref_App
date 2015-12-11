@@ -1,6 +1,5 @@
-
 // initialze the application
-angular.module('slacker', ['ionic', 'slacker.controllers','ionic-material'])
+angular.module('slacker', ['ionic','slacker.controllers','slacker.services','ionic-material'])
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
 
