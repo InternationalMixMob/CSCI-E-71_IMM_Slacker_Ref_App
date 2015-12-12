@@ -23,7 +23,6 @@ default_platform :ios
 
 platform :ios do
   before_all do
-    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
 
     # increment_build_number
 
@@ -75,11 +74,15 @@ platform :ios do
 
   desc "Deploy a new version to the App Store"
   lane :deploy do
-    # snapshot
-    sigh
-    gym(scheme: "SlackerReferenceApp") # Build your app - more options available
-    # deliver(force: true)
-    # frameit
+    hockey(
+      api_token: ENV['HOCKEY_API_TOKEN'],
+      ipa: './SlackerReferenceApp/platforms/ios/build/SlackerDemo.ipa',
+      notes: "Changelog"
+    )
+    slack(
+      slack_url: ENV["SLACK_URL"],
+      message: "Successfully deployed new App Update. Public Download URL " + lane_context[SharedValues::HOCKEY_DOWNLOAD_LINK]
+    )
   end
 
   # You can define as many lanes as you want
