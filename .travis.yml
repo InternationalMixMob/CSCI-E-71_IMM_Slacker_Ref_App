@@ -21,7 +21,7 @@ install:
   - sudo npm install -g bower
   - sudo npm install -g cordova
   - sudo npm install -g ionic
-  - sudo npm install -g ios-deploy
+  #- sudo npm install -g ios-deploy
   - sudo npm install -g ios-sim
   - echo "END - install stage"
 
