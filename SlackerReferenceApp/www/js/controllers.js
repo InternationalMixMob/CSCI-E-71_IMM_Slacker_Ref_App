@@ -68,8 +68,40 @@ angular.module('slacker.controllers', ['slacker.services'])
   })
 
   // the channel controller, needs to do very little for now
-  .controller('ChannelCtrl', function($scope, $stateParams) {
-    console.log($stateParams.channelId);
+  .controller('ChannelCtrl', function($scope, $stateParams, $location, $ionicHistory, SlackerService) {
+    // on enter we need to get our new channel
+    $scope.$on('$ionicView.enter', function(e) {
+      $scope.channel = SlackerService.getChannel($stateParams.channelId);
+      if (!$scope.channel) {
+        console.log('no channel found, redirecting');
+        $ionicHistory.nextViewOptions({disableBack: true});
+        $location.path('#/app/channels');
+      }
+    });
+
+    $scope.data = {};
+    $scope.data.message = '';
+    $scope.data.response = '';
+
+    // now we're going to post a message to that channel
+    // on success, log it and echo it back into the view
+    var successCallback = function(message) {
+      console.log("Success: " + message);
+      $scope.data.response = message;
+      $scope.$apply();
+    };
+
+    // on failure... do the same
+    var failureCallback = function(message) {
+      console.log("Failure: " + message);
+      $scope.data.response = message;
+      $scope.$apply();
+    };
+
+    // post the message on submit
+    $scope.postMessage = function(data) {
+      SlackerService.postMessage(successCallback, failureCallback, data.message, $scope.channel.id);
+    };
   })
 
   // post controller
@@ -94,7 +126,7 @@ angular.module('slacker.controllers', ['slacker.services'])
 
     // just pass this off to the service
     $scope.postMessage = function(data){
-      SlackerService.postMessage(successCallback, failureCallback, data.message);
+      SlackerService.postMessage(successCallback, failureCallback, data.message, null);
     };
 
     // clean everything up
