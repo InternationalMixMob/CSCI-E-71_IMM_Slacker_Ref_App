@@ -1,6 +1,5 @@
-
 // initialze the application
-angular.module('slacker', ['ionic', 'slacker.controllers','ionic-material'])
+angular.module('slacker', ['ionic','slacker.controllers','slacker.services','ionic-material'])
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
 
@@ -59,7 +58,7 @@ angular.module('slacker', ['ionic', 'slacker.controllers','ionic-material'])
     })
 
     // handle displaying whatever it is you want in a "channel"
-    .state('app.single', {
+    .state('app.channel', {
       url: '/channels/:channelId',
       views: {
         'menuContent': {
@@ -70,12 +69,12 @@ angular.module('slacker', ['ionic', 'slacker.controllers','ionic-material'])
     })
 
     // handle
-    .state('app.posts', {
+    .state('app.post', {
       url: '/post',
       views: {
         'menuContent': {
           templateUrl: 'templates/post.html',
-          controller: 'PostsCtrl'
+          controller: 'PostCtrl'
         }
       }
     })
