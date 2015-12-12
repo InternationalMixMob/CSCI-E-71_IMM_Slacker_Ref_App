@@ -15,12 +15,12 @@ angular.module('slacker.services', [])
     var _retrieveChannels = function(success, failure, num) {
       // give up after a bit and return defaults (i.e. no slacker exists)
       if (num >= _NUM_CHANNEL_RETRIES) {
-        _success([{name:'Channel1', id:'1'}, {name:'Channel2', id:'2'}, {name:'Channel3', id:'3'}]);
+        success([{name:'Channel1', id:'1'}, {name:'Channel2', id:'2'}, {name:'Channel3', id:'3'}]);
       }
       // make sure we have Slacker, and if not, wait a bit
       else if (typeof Slacker === 'undefined' || typeof Slacker.getChannelList === 'undefined') {
         console.log('Slacker not ready, waiting 500ms');
-        setTimeout(retrieveChannels, _CHANNEL_RETRY_DELAY, success, failure, ++num);
+        setTimeout(_retrieveChannels, _CHANNEL_RETRY_DELAY, success, failure, ++num);
       }
       // now we ge to actually make the call to the plugin
       else {
@@ -51,9 +51,12 @@ angular.module('slacker.services', [])
 
       // retriving a single channel (must have been refreshed already)
       getChannel: function(channelId) {
-        return _channels.find(function(el, index, arr) {
-          return el.id == channelId;
-        });
+        for (key in _channels) {
+          if (_channels[key].id == channelId)
+            return _channels[key];
+        }
+
+        return null;
       },
 
       // sets the channel (used in posting a message);
@@ -63,15 +66,15 @@ angular.module('slacker.services', [])
         });
       },
 
-      // posting a message - TODO deal with a specific channel
-      postMessage: function(success, failure, message) {
+      // posting a message
+      postMessage: function(success, failure, message, channel) {
         // handle no Slacker...
         if (typeof Slacker === 'undefined') {
           console.log('Slacker plugin not available, running on platform without plugin - echoing back');
           success(message);
         }
         else {
-          Slacker.postMessage(success, failure, message);
+          Slacker.postMessage(success, failure, message, channel);
         }
       }
     }

@@ -2,3 +2,7 @@
 .bar .button.button-clear {
   color: #555;
 }
+
+.header-centered {
+  text-align: center;
+}
