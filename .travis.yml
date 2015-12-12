@@ -4,7 +4,11 @@ cache:
   directories:
     - node_modules/
     - SlackerReferenceApp/node_modules
-    
+    - /usr/local/lib/node_modules/ionic
+    - /usr/local/lib/node_modules/cordova
+    - /usr/local/lib/node_modules/ios-sim
+    - /usr/local/lib/node_modules/bower
+
 
 #addons:
 #  sauce_connect: true
@@ -56,3 +60,7 @@ after_failure:
 after_script:
 # Do things anyway after script/test pass or not
   - echo "After script stage"
+  notifications:
+  slack:
+    rooms:
+      - agilesoftwaredev:${SLACK_BOT_TOKEN}#internationalmixmob
