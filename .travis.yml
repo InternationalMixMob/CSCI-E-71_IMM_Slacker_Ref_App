@@ -9,6 +9,7 @@ before_install:
   - echo "Before install stage"
   - sudo easy_install cpp-coveralls
   - brew update
+  - brew upgrade node
   - brew install gcovr
   - node -v
   - echo "END - Before install stage"
