@@ -7,35 +7,40 @@ global:
 before_install:
 # Commands to excecute before install
   - echo "Before install stage"
-#  - nvm install 4.1.1
-#  - nvm use 4.1.1
+  - sudo easy_install cpp-coveralls
+  - brew update
+  - brew install gcovr
   - node -v
   - echo "END - Before install stage"
 
 install:
   - echo "Install stage"
 #  - npm i
+  - sudo npm install -g bower
+  - sudo npm install -g cordova
+  - sudo npm install -g ionic
+  - sudo npm install -g ios-deploy
+  - sudo npm install -g ios-sim
   - echo "END - install stage"
-#  - sudo npm install -g cordova
-#  - sudo npm install -g ios-deploy
-#  - sudo npm install -g ios-sim
 
 before_script:
 # Commands to excecute before running tests
   - echo "Before script stage"
+  - fastlane ionic
 
-# script:
+script:
 # Run tests
 #  - echo "Running tests"
 #  - npm test
-#  - echo "Starting build"
-#  - npm run build-ios
+  - echo "Starting build"
+  - fastlane build
 #  - cd TestCIiOS
 #  - cordova build ios
 
 after_success:
 # You can do thing after success
   - echo "Build success"
+  - fastlane deploy
 
 after_failure:
 # What if your test fails?
