@@ -33,3 +33,16 @@ SlackerReferenceApp/www/lib
 !SlackerReferenceApp/platforms/.gitkeep
 !SlackerReferenceApp/plugins/.gitkeep
 node_modules/
+
+# fastlane specific
+fastlane/report.xml
+
+# deliver temporary files
+fastlane/Preview.html
+
+# snapshot generated screenshots
+fastlane/screenshots/**/*.png
+fastlane/screenshots/screenshots.html
+
+# scan temporary files
+fastlane/test_output
