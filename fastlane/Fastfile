@@ -41,18 +41,13 @@ platform :ios do
   desc "Create a Build"
   desc "This will also make sure the profile is up to date"
   lane :build do
-#    increment_build_number( xcodeproj: 'SlackerReferenceApp/platforms/ios/SlackerReferenceApp.xcodeproj' )
-#    cert(
-#      keychain_path: '~/Library/Keychains/ios-build.keychain'
-#    )
-#    sh "../scripts/decrypt-files.sh"
-#    sh "../scripts/add-keys.sh"
+
+    sh "../scripts/decrypt-files.sh"
     import_certificates
     sigh(
       adhoc: true,
       skip_install: true,
       filename: 'scripts/profiles/educscie71immapp_AdHoc.mobileprovision'
-#      cert_id: '9TN83A3VF6'
     )
     ENV["PROFILE_UDID"] = lane_context[SharedValues::SIGH_UDID] # use the UDID of the newly created provisioning profile
     gym(
@@ -60,8 +55,6 @@ platform :ios do
       scheme: "SlackerReferenceApp",
       output_directory: "SlackerReferenceApp/platforms/ios/build",
       output_name: "SlackerDemo.ipa",
-#      provisioning_profile_path: 'scripts/profiles/AdHoc_edu.cscie71.imm.app.*.mobileprovision',
-#      codesigning_identity: 'iPhone Distribution: Evan Borysko (9TN83A3VF6)',
       use_legacy_build_api: true
     ) # Build your app - more options available
 
