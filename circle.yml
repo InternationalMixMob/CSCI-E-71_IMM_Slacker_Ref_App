@@ -3,5 +3,5 @@ deployment:
     branch: master
     commands:
       - npm install
-      - chmod +x publish.sh
+      - chmod +x ./scripts/publish.sh
       - ./scripts/publish.sh
