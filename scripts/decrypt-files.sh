@@ -11,3 +11,8 @@ openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in ../scripts/certs/ios_distributio
 echo "=== Decrypted Files ==="
 ls -lt ../scripts/certs
 ls -lt ../scripts/profiles
+
+# Put the provisioning profile in place
+echo "=== Moving Provisioning Profile ==="
+mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+cp "../scripts/profiles/educscie71immapp_AdHoc.mobileprovision" ~/Library/MobileDevice/Provisioning\ Profiles/

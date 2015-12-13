@@ -46,13 +46,14 @@ platform :ios do
 
     sh "../scripts/decrypt-files.sh"
     import_certificates
-    sigh(
-      adhoc: true,
-      skip_install: true,
-      filename: 'scripts/profiles/educscie71immapp_AdHoc.mobileprovision'
-    )
-    ENV["PROFILE_UDID"] = lane_context[SharedValues::SIGH_UDID] # use the UDID of the newly created provisioning profile
-    sh "cd ../SlackerReferenceApp ; cordova build --release --device ios --variable SLACK_CLIENT_ID='" + ENV['SLACK_CLIENT_ID'] + "' --variable SLACK_CLIENT_SECRET='" + ENV['SLACK_CLIENT_SECRET'] + "' "
+#    sigh(
+#      adhoc: true,
+#      skip_install: true,
+#      filename: 'scripts/profiles/educscie71immapp_AdHoc.mobileprovision'
+#    )
+#    ENV["PROFILE_UDID"] = lane_context[SharedValues::SIGH_UDID] # use the UDID of the newly created provisioning profile
+    ENV['PROFILE_UDID'] = '053b5992-f700-42a2-8b2d-5f1578085e8f'
+    sh "cd ../SlackerReferenceApp ; cordova build --release --device ios --codeSignIdentitiy='iPhone Distribution' --provisioningProfile='" + ENV['PROFILE_UDID'] + "' --variable SLACK_CLIENT_ID='" + ENV['SLACK_CLIENT_ID'] + "' --variable SLACK_CLIENT_SECRET='" + ENV['SLACK_CLIENT_SECRET'] + "' "
 
 #    gym(
 #      project: "SlackerReferenceApp/platforms/ios/SlackerReferenceApp.xcodeproj",
