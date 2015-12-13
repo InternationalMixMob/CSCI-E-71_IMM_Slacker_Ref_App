@@ -48,3 +48,8 @@ fastlane/screenshots/screenshots.html
 fastlane/test_output
 
 fastlane/.env
+
+# Certificates
+*.p12
+*.cer
+*.mobileprovision

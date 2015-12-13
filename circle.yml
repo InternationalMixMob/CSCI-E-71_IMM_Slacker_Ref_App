@@ -4,4 +4,4 @@ deployment:
     commands:
       - npm install
       - chmod +x publish.sh
-      - ./publish.sh
+      - ./scripts/publish.sh
