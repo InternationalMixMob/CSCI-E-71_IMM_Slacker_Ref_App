@@ -3,7 +3,9 @@
   "version": "0.0.2",
   "dependencies": {
     "bower": "*",
-    "cordova": "5.4.0"
+    "cordova": "5.4.0",
+    "ionic" : "*",
+    "cordova-build-increment" : "*"
   },
   "scripts": {
     "test": "echo \"Dummy test\" && exit 0"
