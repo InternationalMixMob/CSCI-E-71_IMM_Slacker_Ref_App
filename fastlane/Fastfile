@@ -106,15 +106,15 @@ platform :ios do
     )
 
     import_certificate(
-      certificate_path: "../scripts/certs/io_distribution.p12",
+      certificate_path: "scripts/certs/ios_distribution.p12",
       certificate_password: ENV['ENCRYPTION_SECRET'],
       keychain_name: ENV["KEYCHAIN_NAME"]
     )
 
-    import_certificate(
-      certificate_path: "../scripts/certs/ios_distribution.cer",
-      keychain_name: ENV["KEYCHAIN_NAME"]
-    )
+  #  import_certificate(
+  #    certificate_path: "scripts/certs/ios_distribution.cer",
+  #    keychain_name: ENV["KEYCHAIN_NAME"]
+  #  )
   end
 
 
