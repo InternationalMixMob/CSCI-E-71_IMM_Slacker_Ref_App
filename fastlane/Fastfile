@@ -1,0 +1,132 @@
+# Customise this file, documentation can be found here:
+# https://github.com/KrauseFx/fastlane/tree/master/docs
+# All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# By default, fastlane will send which actions are used
+# No personal data is shared, more information on https://github.com/fastlane/enhancer
+# Uncomment the following line to opt out
+# opt_out_usage
+
+# If you want to automatically update fastlane if a new version is available:
+update_fastlane
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "1.47.0"
+
+default_platform :ios
+
+
+platform :ios do
+  before_all do
+    ENV['KEYCHAIN_NAME'] = "TempKeychain.keychain"
+  end
+
+  desc "Run Cordova Cmds"
+  lane :cordova do
+    sh "cd ../SlackerReferenceApp ; bower install"
+    sh "cd ../SlackerReferenceApp ; cordova prepare --variable SLACK_CLIENT_ID='" + ENV['SLACK_CLIENT_ID'] + "' --variable SLACK_CLIENT_SECRET='" + ENV['SLACK_CLIENT_SECRET'] + "' "
+    #sh "cd ../SlackerReferenceApp ; cordova build ios --variable SLACK_CLIENT_ID='" + ENV['SLACK_CLIENT_ID'] + "' --variable SLACK_CLIENT_SECRET='" + ENV['SLACK_CLIENT_SECRET'] + "' "
+  end
+
+  desc "Run Ionic Cmds"
+  lane :ionic do
+    sh "cd ../SlackerReferenceApp ; bower install"
+    sh "cd ../SlackerReferenceApp ; ionic prepare --variable SLACK_CLIENT_ID='" + ENV['SLACK_CLIENT_ID'] + "' --variable SLACK_CLIENT_SECRET='" + ENV['SLACK_CLIENT_SECRET'] + "' "
+    #sh "cd ../SlackerReferenceApp ; ionic build ios --variable SLACK_CLIENT_ID='" + ENV['SLACK_CLIENT_ID'] + "' --variable SLACK_CLIENT_SECRET='" + ENV['SLACK_CLIENT_SECRET'] + "' "
+  end
+
+  desc "Create a Build"
+  desc "This will also make sure the profile is up to date"
+  lane :build do
+
+    sh "../scripts/decrypt-files.sh"
+    import_certificates
+#    sigh(
+#      adhoc: true,
+#      skip_install: true,
+#      filename: 'scripts/profiles/educscie71immapp_AdHoc.mobileprovision'
+#    )
+#    ENV["PROFILE_UDID"] = lane_context[SharedValues::SIGH_UDID] # use the UDID of the newly created provisioning profile
+    ENV['PROFILE_UDID'] = '053b5992-f700-42a2-8b2d-5f1578085e8f'
+    sh "cd ../SlackerReferenceApp ; cordova build --release --device ios --codeSignIdentitiy='iPhone Distribution' --provisioningProfile='" + ENV['PROFILE_UDID'] + "' --variable SLACK_CLIENT_ID='" + ENV['SLACK_CLIENT_ID'] + "' --variable SLACK_CLIENT_SECRET='" + ENV['SLACK_CLIENT_SECRET'] + "' "
+
+#    gym(
+#      project: "SlackerReferenceApp/platforms/ios/SlackerReferenceApp.xcodeproj",
+#      scheme: "SlackerReferenceApp",
+#      output_directory: "SlackerReferenceApp/platforms/ios/build",
+#      output_name: "SlackerDemo.ipa",
+#      use_legacy_build_api: true
+#    ) # Build your app - more options available
+
+
+  end
+
+  desc "Deploy a new version to HockeyApp"
+  lane :deploy do
+    hockey(
+      api_token: ENV['HOCKEY_API_TOKEN'],
+      ipa: './SlackerReferenceApp/platforms/ios/build/device/SlackerReferenceApp.ipa',
+      notes: "Changelog"
+    )
+    slack(
+      slack_url: ENV["SLACK_URL"],
+      message: "Successfully deployed new App Update. Public Download URL " + lane_context[SharedValues::HOCKEY_DOWNLOAD_LINK]
+    )
+  end
+
+  # You can define as many lanes as you want
+
+  after_all do |lane|
+    # This block is called, only if the executed lane was successful
+
+    # slack(
+    #   message: "Successfully deployed new App Update."
+    # )
+  end
+
+  error do |lane, exception|
+    # slack(
+    #   message: exception.message,
+    #   success: false
+    # )
+  end
+
+  # SHARED FUNCTIONS
+  def import_certificates
+    return unless Helper.is_ci? # As in my local machine I don't need to import the certificates, only run if it's in the CI
+
+    create_keychain(
+      name: ENV["KEYCHAIN_NAME"],
+      default_keychain: true,
+      unlock: true,
+      timeout: 3600,
+      lock_when_sleeps: true,
+      password: ENV["KEY_PASSWORD"]
+    )
+
+    import_certificate(
+      certificate_path: "scripts/certs/ios_distribution.p12",
+      certificate_password: ENV['ENCRYPTION_SECRET'],
+      keychain_name: ENV["KEYCHAIN_NAME"]
+    )
+
+  #  import_certificate(
+  #    certificate_path: "scripts/certs/ios_distribution.cer",
+  #    keychain_name: ENV["KEYCHAIN_NAME"]
+  #  )
+  end
+
+
+
+
+end
+
+
+
+# More information about multiple platforms in fastlane: https://github.com/KrauseFx/fastlane/blob/master/docs/Platforms.md
+# All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
