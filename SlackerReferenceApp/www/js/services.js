@@ -1,7 +1,7 @@
 angular.module('slacker.services', [])
-  
+
   // everything we could need from our Slacker servie
-  .factory('SlackerService', function() {
+  .factory('SlackerService', function($rootScope) {
     /*
      * private state variables
      */
@@ -10,6 +10,7 @@ angular.module('slacker.services', [])
     var _currentChannel = null;
     var _NUM_CHANNEL_RETRIES = 6;
     var _CHANNEL_RETRY_DELAY = 500;
+    var _loggedIn = false;
 
     // helper to retrieve the channels - handles the case where the plugin isn't available
     var _retrieveChannels = function(success, failure, num) {
@@ -26,12 +27,31 @@ angular.module('slacker.services', [])
       else {
         Slacker.getChannelList(success, failure, true);
       }
-    }
+    };
 
     /*
      * what we actually expose to the controllers
      */
     return {
+      authenticate: function (success) {
+        var wrapSuccess = function () {
+          _loggedIn = true;
+          success();
+          $rootScope.$emit('$loginChanged');
+        };
+        if (typeof Slacker !== 'undefined') {
+          Slacker.authenticate(wrapSuccess);
+        } else {
+          console.error('Slacker doesn\'t actually exist!');
+          wrapSuccess();
+        }
+      },
+
+      // Get current login state
+      loggedIn: function () {
+        return _loggedIn;
+      },
+
       // return the current channels we have
       getChannels: function() {
         return _channels;
@@ -44,7 +64,7 @@ angular.module('slacker.services', [])
           console.log('Successfully retrieved ' + channels.length + ' channels!');
           _channels = channels;
           success(channels);
-        }
+        };
 
         _retrieveChannels(_success, failure, 0);
       },
@@ -60,7 +80,7 @@ angular.module('slacker.services', [])
       },
 
       // sets the channel (used in posting a message);
-      setChannel: function(channelId) { 
+      setChannel: function(channelId) {
         _channel = _channels.find(function(el, index, arr) {
           return el.id == channelId;
         });
