@@ -3,7 +3,7 @@ angular.module('slacker', ['ionic','slacker.controllers','slacker.services','ion
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
 
-      if (!typeof hockeyapp === 'undefined') {
+      if (typeof hockeyapp !== 'undefined') {
         hockeyapp.start(
           function() {
             console.log('hockey started');
@@ -23,6 +23,7 @@ angular.module('slacker', ['ionic','slacker.controllers','slacker.services','ion
       }
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
+
       if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         cordova.plugins.Keyboard.disableScroll(true);
@@ -44,6 +45,16 @@ angular.module('slacker', ['ionic','slacker.controllers','slacker.services','ion
       abstract: true,
       templateUrl: 'templates/menu.html',
       controller: 'SlackerCtrl'
+    })
+
+    .state('app.login', {
+      url: '/login',
+      views: {
+        menuContent: {
+          templateUrl: 'templates/login.html',
+          controller: 'LoginCtrl'
+        }
+      }
     })
 
     // listing of all of the channels in the currently-authenticated team
@@ -90,6 +101,6 @@ angular.module('slacker', ['ionic','slacker.controllers','slacker.services','ion
     });
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/post');
+    $urlRouterProvider.otherwise('/app/login');
 
   });
