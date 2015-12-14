@@ -6,6 +6,7 @@ cd SlackerReferenceApp
 
 # Install dependencies
 ../node_modules/bower/bin/bower install
+../node_modules/cordova/bin/cordova plugin add https://github.com/InternationalMixMob/CSCI-E-71_IMM_Slacker_Cordova_Plugin.git --variable SLACK_CLIENT_ID=${SLACK_CLIENT_ID} --variable SLACK_CLIENT_SECRET=${SLACK_CLIENT_SECRET}
 ../node_modules/cordova/bin/cordova prepare
 
 # Build app
